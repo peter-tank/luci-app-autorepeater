@@ -1,0 +1,80 @@
+
+<!-- ++ BEGIN ++ Auto Repeater ++ overview_updater.htm ++ -->
+<% include("cbi/map") %>
+<div <%=
+attr("id",  "cbi-" .. self.config .. ".overview_updater") .. attr("data-sfile", self.sfile)
+%>
+></div>
+<script type="text/javascript">//<![CDATA[
+	XHR.poll(5, '<%=url('admin/services/overview_status')%>', {sfile: document.getElementById("cbi-<%=self.config%>.overview_updater").dataset.sfile} ,
+		function(x)
+		{
+			var sec=JSON.parse(x.responseText);
+			if (sec && sec.status)
+			{
+				_status=sec.status;
+				
+				for (var idx = 0; idx < _status.length; idx++)
+				{
+					var secs=_status[idx];
+					var s=secs.name;
+					var stat="";
+					switch(s) {
+						case "LastMap":
+						//ss._LastMap.two//fail+success
+							s = document.getElementById('cbid.autorepeater.' + secs.id + '.two');
+							if (s) {
+								stat = String.format(
+									'[<font color=red>%s</font>] - [<font color=blue>%s</font>]',
+										secs.fail ? secs.fail : 'unkown',
+										secs.ok ? secs.ok : 'unkown'
+								);
+								s.innerHTML = stat; }
+							break;
+						case "LastSignal":
+						//._LastSignal.two/mac+signal
+						s = document.getElementById('cbid.autorepeater.' + secs.id + '.two');
+							if (s) {
+								stat = String.format(
+									'[<font color=red>%s</font>] - [<font color=blue>%s%%</font>]',
+										secs.bssid ? secs.bssid : 'unkown',
+										secs.signal ? secs.signal : 'unkown'
+								);
+								s.innerHTML = stat; }
+							break;
+						case "Realcipher":
+						//._Realcipher.two/encryption
+							s = document.getElementById('cbid.autorepeater.' + secs.id + '.two');
+							if (s) {
+								stat = String.format(
+									'[<font color=blue>%s</font>]',
+										secs.encryption ? secs.encryption : 'unkown'
+								);
+								s.innerHTML = stat; }
+							break;
+						case "LastConn":
+						//._LastConn.one/fail
+						//._LastConn.two/success
+							s = document.getElementById('cbid.autorepeater.' + secs.id + '.one');
+							if (s) {
+								stat = String.format(
+									'[<font color=red>%s</font>]',
+										secs.fail ? secs.fail : 'unkown'
+								);
+								s.innerHTML = stat; }
+							s = document.getElementById('cbid.autorepeater.' + secs.id + '.two');
+							if (s) {
+								stat = String.format(
+									'[<font color=blue>%s</font>]',
+										secs.ok ? secs.ok : 'unkown'
+								);
+								s.innerHTML = stat; }
+							break;
+						default:
+					}
+				}
+			}
+		}
+	);
+//]]></script>
+<!-- ++ END ++ Auto Repeater ++ overview_updater.htm ++ -->
