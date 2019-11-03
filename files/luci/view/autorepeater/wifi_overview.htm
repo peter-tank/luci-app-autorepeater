@@ -19,11 +19,11 @@
 	maintitle	= [[</a><a href="javascript:alert(']]
 		.. translate("Version Information")
 		.. [[\n\nminiupnpc]]
-		.. [[\n\t]] .. translate("Version") .. [[:\t]] .. ATRP.ipkg_ver_installed("miniupnpc")
+		.. [[\n\t]] .. translate("Version") .. [[:\t]] .. (ATRP.ipkg_ver_installed("miniupnpc") or "none")
 		.. [[\n\nlibminiupnpc ]] .. translate("installed") .. [[:]]
-		.. [[\n\t]] .. translate("Version") .. [[:\t]] .. ATRP.ipkg_ver_installed("libminiupnpc")
+		.. [[\n\t]] .. translate("Version") .. [[:\t]] .. (ATRP.ipkg_ver_installed("libminiupnpc") or "none")
 		.. [[\n\nmacchanger ]] .. translate("installed") .. [[:]]
-		.. [[\n\t]] .. translate("Version") .. [[:\t]] .. ATRP.ipkg_ver_installed("macchanger")
+		.. [[\n\t]] .. translate("Version") .. [[:\t]] .. (ATRP.ipkg_ver_installed("macchanger") or "none")
 		.. [[\n\n]]
 	.. [[')">]]
 	.. translate("<font color=\"blue\"><strong>Auto Repeater</strong></font>") .. [[</a>]]

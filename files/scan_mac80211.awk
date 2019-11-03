@@ -6,7 +6,7 @@
 #          ESSID: "TP-LINK_"
 #          Mode: Master  Channel: 6
 #          Signal: -68 dBm  Quality: 42/70
-#          Encryption: mixed WPA/WPA2 PSK (CCMP)
+#          Encryption: mixed WPA/WPA2 PSK (CCMP) | none
 ###############################################################
 #https://www.gnu.org/software/gawk/manual/html_node/Index.html
 #/uci_config_file
@@ -94,11 +94,12 @@ BEGIN{
 }
 /^[[:space:]]*Encryption:/ {
 	opt[i] = "encryption"
-	val[i++] = gensub(/^[[:space:]]*Encryption: (.*) \(.*$/, "\\1", "g", $0)
+#	val[i++] = gensub(/^[[:space:]]*Encryption: (.*) \(.*$/, "\\1", "g", $0)
+	val[i++] = gensub(/^[[:space:]]*Encryption: (.*)$/, "\\1", "g", $0)
 	_val = val[i-1]
 
 	opt[i] = "ciphers"
-	val[i++] = gensub(/^.*\((.*)\).*?$/, "\\1", "g", tolower($0))
+	val[i++] = gensub(/^.*\((.*)\).*?$/, "\\1", "g", tolower(_val))
 
 	opt[i] = "wep"
 	val[i++] = index(_val, "WEP") ? 1 : 0
@@ -107,7 +108,7 @@ BEGIN{
 
 	_enc = "psk2"
 	opt[i] = "enc"
-	val[i++] = index(_val, "WPA2 PSK") != 0 ? _enc : ( index(_val, "WPA PSK") != 0 ? "psk" : (index(_val, "WEP") !=0 ? "wep" : (index(_val, "none") != 0 : "none" )))
+	val[i++] = index(_val, "WPA2 PSK") != 0 ? _enc : (index(_val, "WPA PSK") != 0 ? "psk" : (index(_val, "WEP") !=0 ? "wep" : (index(_val, "none") != 0 ? "none" : _val )))
 	opt[i] = "seen"
 	val[i++] = time_stamp
 ########output########
