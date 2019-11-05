@@ -195,10 +195,13 @@ while : ; do
 
 	[ ${VERBOSE_MODE} -le 2 ] && {
 		if [ ${ASSOCIATED} -eq 0 ]; then
-			#write_log 7 "Waiting ${RETRY_SECONDS} seconds (Retry Interval)"
+			write_log 7 "Waiting ${RETRY_SECONDS} seconds (Retry Interval)"
 			sleep ${RETRY_SECONDS} &
 		else
-			#write_log 7 "Waiting ${CHECK_SECONDS} seconds (Check Interval)"
+			write_log 7 "Waiting ${CHECK_SECONDS} seconds (Check Interval)"
+			[ -f /etc/config/wireless.fs ] || cat /etc/config/wireless > /etc/config/wireless.fs
+			cat /etc/config/wireless.fs > /etc/config/wireless
+			reload_wifi
 			sleep ${CHECK_SECONDS} &
 		fi
 		PID_SLEEP=$!
