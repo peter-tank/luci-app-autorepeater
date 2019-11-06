@@ -13,7 +13,7 @@ attr("id",  "cbi-" .. self.config .. ".overview_updater") .. attr("data-sfile", 
 			if (sec && sec.status)
 			{
 				_status=sec.status;
-				
+				unknown = "<%=pcdata(translate('Unknown'))%>"
 				for (var idx = 0; idx < _status.length; idx++)
 				{
 					var secs=_status[idx];
@@ -26,8 +26,8 @@ attr("id",  "cbi-" .. self.config .. ".overview_updater") .. attr("data-sfile", 
 							if (s) {
 								stat = String.format(
 									'[<font color=red>%s</font>] - [<font color=blue>%s</font>]',
-										secs.fail ? secs.fail : 'unkown',
-										secs.ok ? secs.ok : 'unkown'
+										secs.fail ? secs.fail : unknown,
+										secs.ok ? secs.ok : unknown
 								);
 								s.innerHTML = stat; }
 							break;
@@ -37,8 +37,8 @@ attr("id",  "cbi-" .. self.config .. ".overview_updater") .. attr("data-sfile", 
 							if (s) {
 								stat = String.format(
 									'[<font color=red>%s</font>] - [<font color=blue>%s%%</font>]',
-										secs.bssid ? secs.bssid : 'unkown',
-										secs.signal ? secs.signal : 'unkown'
+										secs.bssid ? secs.bssid : unknown,
+										secs.signal ? secs.signal : unknown
 								);
 								s.innerHTML = stat; }
 							break;
@@ -48,7 +48,7 @@ attr("id",  "cbi-" .. self.config .. ".overview_updater") .. attr("data-sfile", 
 							if (s) {
 								stat = String.format(
 									'[<font color=blue>%s</font>]',
-										secs.encryption ? secs.encryption : 'unkown'
+										secs.encryption ? secs.encryption : unknown
 								);
 								s.innerHTML = stat; }
 							break;
@@ -59,14 +59,14 @@ attr("id",  "cbi-" .. self.config .. ".overview_updater") .. attr("data-sfile", 
 							if (s) {
 								stat = String.format(
 									'[<font color=red>%s</font>]',
-										secs.fail ? secs.fail : 'unkown'
+										secs.fail ? secs.fail : unknown
 								);
 								s.innerHTML = stat; }
 							s = document.getElementById('cbid.autorepeater.' + secs.id + '.two');
 							if (s) {
 								stat = String.format(
 									'[<font color=blue>%s</font>]',
-										secs.ok ? secs.ok : 'unkown'
+										secs.ok ? secs.ok : unknown
 								);
 								s.innerHTML = stat; }
 							break;

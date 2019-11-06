@@ -179,8 +179,8 @@ function cipher.write(self, section)
 end
 
 
-encr:value("none", "No Encryption")
-encr:value("auto", "Detemine by scanning")
+encr:value("none", translate("No Encryption"))
+encr:value("auto", translate("Detemine by scanning"))
 
 --if hwtype == "atheros" or hwtype == "mac80211" or hwtype == "prism2" then
 	local supplicant = NXFS.access("/usr/sbin/wpa_supplicant")

@@ -990,7 +990,7 @@ foreach_prepare_new_config_from_loaded() {
 #		${ERROR_NO_CATCH})
 #			;;
 		*)
-			write_log 7 "* unkown error on #> ${___function} __ldev_info \"${known_section_id}\" \"${know_type}\" \"${scan_section_id}\" \"${scan_type}\""
+			write_log 7 "* unknown error on #> ${___function} __ldev_info \"${known_section_id}\" \"${know_type}\" \"${scan_section_id}\" \"${scan_type}\""
 			return 1
 			;;
 	esac

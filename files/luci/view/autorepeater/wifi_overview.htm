@@ -309,7 +309,7 @@
 
 <div class="cbi-map" id="cbi-autorepeater">
 	<h2 name="content"><%=maintitle%></h2>
-	<div class="cbi-map-descr">Auto Repeater helps you turn your router as a repeater, join a wireless station by scan station ssid or bssid first.</div>
+	<div class="cbi-map-descr"><%:Auto Repeater helps you turn your router as a repeater, join a wireless station by scan station ssid or bssid first.%></div>
 </div>
 <div class="cbi-map" id="cbi-autorepeater.postglobal">
 	<fieldset class="cbi-section">
@@ -324,7 +324,7 @@
 				for i, cbiname in ipairs(cbi_list) do
 					local tplname = tpl_list[i]
 					local title = title_list[i]
-					local value = value_list[i]
+					local value = translate(value_list[i])
 			%>
 				<td class="cbi-value-field" style="padding:3px">
 				<div class="functionbox">

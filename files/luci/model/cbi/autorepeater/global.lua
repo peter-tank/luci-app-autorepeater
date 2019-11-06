@@ -104,7 +104,7 @@ end
 
 ns:tab("Basic", translate("Basic"))
 ns:tab("assoc", translate("Associating"))
-ns:tab("timer", translate("Timimg"))
+ns:tab("timer", translate("Timing"))
 ns:tab("PortMapping", translate("Mapping"))
 ns:tab("Logging", translate("Logging"))
 

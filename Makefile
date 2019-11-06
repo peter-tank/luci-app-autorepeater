@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=autorepeater
-PKG_VERSION:=0.1.0
+PKG_VERSION:=0.1.1
 PKG_RELEASE:=1
 
 PKG_LICENSE:=GPLv3
@@ -102,7 +102,7 @@ define Package/autorepeater/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
 	$(INSTALL_DATA) ./files/luci/controller/autorepeater.lua $(1)/usr/lib/lua/luci/controller/
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/i18n
-#	$(INSTALL_DATA) $(PKG_BUILD_DIR)/autorepeater.*.lmo $(1)/usr/lib/lua/luci/i18n/
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/autorepeater.*.lmo $(1)/usr/lib/lua/luci/i18n/
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/model/cbi/autorepeater
 	$(INSTALL_DATA) ./files/luci/model/cbi/autorepeater/*.lua $(1)/usr/lib/lua/luci/model/cbi/autorepeater/
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/tools

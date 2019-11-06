@@ -1,4 +1,4 @@
-AutoRepeater for OpenWrt Chaos Calmer 15.05 (wireless scan parsing tested on mac80211)
+AutoRepeater for OpenWrt
 ===
 
 Helping to setup the router as a automatic repeater
@@ -8,7 +8,7 @@ Fun
 
 - Configure via web GUI
 - Auto connect to AP with specific MAC address or ssid name list
-- Add AP switch On/Off button settings and use power LED to AP status
+- Add AP switch On/Off button settings and, power LED blinking as failsafe mode indicates AP is OFF
 - Use mminiupnpc mapping ports from routed IP
 - Use macchanger to change device macaddr
 
@@ -24,6 +24,7 @@ Idea's from
 - kuthulu/Iron AutoAP Next Gen
 - autowwan [autowwan]
 - luci-app-autoap [autoap]
+- wwanHotspot [wwanHotspot]
 
 compile
 ---
@@ -66,4 +67,5 @@ Screenshots
 
   [autowwan]: https://github.com/koniu/autowwan
   [autoap]: https://github.com/openwrt-1983/2015/tree/master/luci-app-autoap
+  [wwanHotspot]: https://github.com/jordi-pujol/wwanHotspot/
   [S]: https://wiki.openwrt.org/doc/howto/obtain.firmware.sdk

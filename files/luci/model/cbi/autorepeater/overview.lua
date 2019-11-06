@@ -83,7 +83,7 @@ if has_miniupnpc then
 	end
 
 	function des.set_two(self, section)
-		return translate("unkown")
+		return translate("Unknown")
 	end
 
 	local e=ns:option(Flag,"enabled",translate("Enabled"))
@@ -117,8 +117,8 @@ devt = ts:option( DummyValue, "is_mac",
 devt.rmempty = false
 function devt.cfgvalue(self, section)
 	local devstr = self.map:get(section, "is_mac") or ""
-	if devstr == "1" then return "bssid"
-    else return "ssid"
+	if devstr == "1" then return translate("BSSID")
+	else return translate("SSID")
 	end
 end
 
@@ -152,7 +152,7 @@ function enc.set_one(self, section)
 	end
 end
 function enc.set_two(self, section)
-	return "unknown"
+	return translate("Unknown")
 end
 
 -- enabled
