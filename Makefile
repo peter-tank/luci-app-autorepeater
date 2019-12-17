@@ -27,7 +27,7 @@ define Package/autorepeater/Default
 	TITLE:=AutoRepeater LuCI interface
 	URL:=https://github.com/peter-tank/autorepeater
 	PKGARCH:=all
-	DEPENDS:=+rpcd-mod-iwinfo +jshn +jsonfilter
+	DEPENDS:=
 endef
 
 
