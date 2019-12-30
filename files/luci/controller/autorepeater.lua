@@ -43,22 +43,7 @@ function index()
 
 		page = entry({"admin", "services", "autorepeater"}, arcombine(template("autorepeater/wifi_overview"), cbi("autorepeater/autorepeater")), _("AutoRepeater"), 1)
 		page.leaf = true
-		page.subindex = true
 
-		if page.inreq then
-			local wdev
-			local net = require "luci.model.network".init(uci)
-			for _, wdev in ipairs(net:get_wifidevs()) do
-				local wnet
-				for _, wnet in ipairs(wdev:get_wifinets()) do
-					entry(
-						{"admin", "services", "autorepeater", wnet:id()},
-						alias("admin", "services", "autorepeater"),
-						wdev:name() .. ": " .. wnet:shortname()
-					)
-				end
-			end
-		end
 		page = entry({"admin", "services", "atrp_post_page"}, post("atrp_post_page"), nil)
 		page.leaf = true
 
