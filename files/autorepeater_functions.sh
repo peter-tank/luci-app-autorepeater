@@ -463,10 +463,10 @@ done
 	if [ -z "${__dev}" ]; then
 		if [ ! -z "${__dev_ap}" ]; then
 			write_log 4 "* no suitable sta mode device build one"
-			__ret="autorepeater_${band}"
+			__ret="atrp_${__dev_ap}_sta"
 			new_sec=$(uci add wireless wifi-iface)
-			#uci rename wireless.${new_sec}="${__ret}"
-			__ret="${new_sec}"
+			uci rename wireless.${new_sec}="${__ret}"
+			# __ret="${new_sec}"
 			uci set wireless.${__ret}.device="${__dev_ap}"
 			uci set wireless.${__ret}.network="${__IFACE}"
 			uci set wireless.${__ret}.mode="sta"

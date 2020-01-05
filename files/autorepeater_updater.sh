@@ -193,7 +193,6 @@ while : ; do
 		ASSOCIATED=1
 	fi
 
-	[ ${VERBOSE_MODE} -le 2 ] && {
 		if [ ${ASSOCIATED} -eq 0 ]; then
 			write_log 7 "Waiting ${RETRY_SECONDS} seconds (Retry Interval)"
 			sleep ${RETRY_SECONDS} &
@@ -207,7 +206,6 @@ while : ; do
 		PID_SLEEP=$!
 		wait ${PID_SLEEP}
 		PID_SLEEP=0
-	} || write_log 7 "Verbose Mode: ${VERBOSE_MODE} - NO Check Interval waiting"
 
 	#pingout PING_OUT
 	if [ ${PING_OUT} -ne 0 ]; then
