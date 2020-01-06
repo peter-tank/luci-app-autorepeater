@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=autorepeater
-PKG_VERSION:=0.1.1
+PKG_VERSION:=0.2.1
 PKG_RELEASE:=1
 
 PKG_LICENSE:=GPLv3
@@ -28,6 +28,7 @@ define Package/autorepeater/Default
 	URL:=https://github.com/peter-tank/autorepeater
 	PKGARCH:=all
 	DEPENDS:=
+
 endef
 
 
@@ -82,7 +83,7 @@ define Package/autorepeater/postinst
 if [ -z "$${IPKG_INSTROOT}" ]; then
 	( . /etc/uci-defaults/luci-autorepeater ) && rm -f /etc/uci-defaults/luci-autorepeater
 	chmod 755 /etc/init.d/autorepeater >/dev/null 2>&1
-	#/etc/init.d/autorepeater enable >/dev/null 2>&1
+	/etc/init.d/autorepeater enable >/dev/null 2>&1
 
 	uci -q batch <<-EOF >/dev/null
 		delete firewall.autorepeater

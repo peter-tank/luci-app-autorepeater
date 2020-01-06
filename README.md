@@ -59,11 +59,8 @@ compile
    ```
 installing
 --- 
-- Depends: rpcd-mod-iwinfo jshn jsonfilter
+- Depends: rpcd-mod-iwinfo jshn jsonfilter awk
 
-Screenshots
----
-![demo](https://github.com/peter-tank/openwrt-autorepeater/raw/master/screenshots.png)
 
   [autowwan]: https://github.com/koniu/autowwan
   [autoap]: https://github.com/openwrt-1983/2015/tree/master/luci-app-autoap
