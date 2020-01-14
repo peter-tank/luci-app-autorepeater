@@ -20,7 +20,7 @@ function m.on_commit(map)
 	local wnet = nw:get_wifinet(arg[1])
 	if ifsection and wnet then
 		ifsection.section = wnet.sid
-		m.title = [[</a><a href="]] .. DISP.build_url("admin", "services", "autorepeater") .. [[">]] ..
+		m.title = [[<a href="]] .. DISP.build_url("admin", "services", "autorepeater") .. [[">]] ..
 		translate("Auto Repeater") .. [[</a> - ]] .. ut.pcdata(wnet:get_i18n())
 		m.redirect = DISP.build_url("admin", "services", "autorepeater")
 	end
@@ -66,7 +66,7 @@ function m.parse(map)
 	end
 end
 
-m.title = [[</a><a href="]] .. DISP.build_url("admin", "services", "autorepeater") .. [[">]] ..
+m.title = [[<a href="]] .. DISP.build_url("admin", "services", "autorepeater") .. [[">]] ..
 	translate("Auto Repeater") .. [[</a> - ]] .. ut.pcdata(wnet:get_i18n())
 m.redirect = DISP.build_url("admin", "services", "autorepeater")
 

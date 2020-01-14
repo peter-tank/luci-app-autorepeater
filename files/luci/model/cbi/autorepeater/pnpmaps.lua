@@ -25,8 +25,7 @@ local bold_off	= "</strong>"
 -- cbi-map definition -- #######################################################
 m = Map("autorepeater")
 
--- first need to close <a> from cbi map template our <a> closed by template
-m.title = [[</a><a href="]] .. DISP.build_url("admin", "services", "autorepeater") .. [[">]] ..
+m.title = [[<a href="]] .. DISP.build_url("admin", "services", "autorepeater") .. [[">]] ..
 		translate("Auto Repeater") .. [[</a>]]
 
 m.description = translate("Auto Repeater helps you turn your router as a repeater, " ..

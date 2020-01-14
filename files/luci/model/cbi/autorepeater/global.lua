@@ -64,8 +64,7 @@ end
 -- cbi-map definition -- #######################################################
 local m = Map("autorepeater")
 
--- first need to close <a> from cbi map template our <a> closed by template
-m.title = [[</a><a href="]] .. DISP.build_url("admin", "services", "autorepeater") .. [[">]] ..
+m.title = [[<a href="]] .. DISP.build_url("admin", "services", "autorepeater") .. [[">]] ..
 		translate("Auto Repeater") .. [[</a>]]
 
 m.description = translate("Auto Repeater helps you turn your router as a repeater, " ..
@@ -197,7 +196,7 @@ function pc.cfgvalue(self, section)
 		end
 		UCI:unload("system")
 	end
-	self.alias_function = translate("Current function") .. ": <font color=red><i>" .. func .. "</i></font>"
+	self.alias_function = translate("Current function") .. ": <font color='red'><i>" .. func .. "</i></font>"
 	return value
 end
 function pc.write(self, section, value)
