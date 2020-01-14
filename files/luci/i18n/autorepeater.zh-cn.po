@@ -65,7 +65,7 @@ msgid "Below a list of configuration tips for your system to run Auto Repeater w
 msgstr "关注以下注意事项，发挥最大潜能"
 
 msgid "Below is a list of station scanning configurations and their broadcasting state.<br /><strong>Will trying to associate the *MATCHING* stations by signal strength or saved order. (change by golbal settings)<br /></strong>"
-msgstr "最近一次扫描，匹配出来的附近热点状态表。<br /><strong>将按全局设定的连接次序（按信号质量或列表顺序）尝试匹配连接。"
+msgstr "最近一次扫描，匹配出来的附近热点状态表。<br /><strong>将按全局设定的连接次序（按信号质量或列表顺序）尝试匹配连接。<br /></strong>"
 
 msgid "By Saved"
 msgstr "按列表顺序"
