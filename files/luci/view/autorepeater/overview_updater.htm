@@ -25,7 +25,7 @@ attr("id",  "cbi-" .. self.config .. ".overview_updater") .. attr("data-sfile", 
 							s = document.getElementById('cbid.autorepeater.' + secs.id + '.two');
 							if (s) {
 								stat = String.format(
-									'[<font color=red>%s</font>] - [<font color=blue>%s</font>]',
+									'[<font color="red">%s</font>] - [<font color="blue">%s</font>]',
 										secs.fail ? secs.fail : unknown,
 										secs.ok ? secs.ok : unknown
 								);
@@ -36,7 +36,7 @@ attr("id",  "cbi-" .. self.config .. ".overview_updater") .. attr("data-sfile", 
 						s = document.getElementById('cbid.autorepeater.' + secs.id + '.two');
 							if (s) {
 								stat = String.format(
-									'[<font color=red>%s</font>] - [<font color=blue>%s%%</font>]',
+									'[<font color="red">%s</font>] - [<font color="blue">%s%%</font>]',
 										secs.bssid ? secs.bssid : unknown,
 										secs.signal ? secs.signal : unknown
 								);
@@ -47,7 +47,7 @@ attr("id",  "cbi-" .. self.config .. ".overview_updater") .. attr("data-sfile", 
 							s = document.getElementById('cbid.autorepeater.' + secs.id + '.two');
 							if (s) {
 								stat = String.format(
-									'[<font color=blue>%s</font>]',
+									'[<font color="blue">%s</font>]',
 										secs.encryption ? secs.encryption : unknown
 								);
 								s.innerHTML = stat; }
@@ -58,14 +58,14 @@ attr("id",  "cbi-" .. self.config .. ".overview_updater") .. attr("data-sfile", 
 							s = document.getElementById('cbid.autorepeater.' + secs.id + '.one');
 							if (s) {
 								stat = String.format(
-									'[<font color=red>%s</font>]',
+									'[<font color="red">%s</font>]',
 										secs.fail ? secs.fail : unknown
 								);
 								s.innerHTML = stat; }
 							s = document.getElementById('cbid.autorepeater.' + secs.id + '.two');
 							if (s) {
 								stat = String.format(
-									'[<font color=blue>%s</font>]',
+									'[<font color="blue">%s</font>]',
 										secs.ok ? secs.ok : unknown
 								);
 								s.innerHTML = stat; }
