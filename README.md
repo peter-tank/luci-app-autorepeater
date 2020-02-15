@@ -59,7 +59,7 @@ compile
    ```
 installing
 --- 
-- Depends: rpcd-mod-iwinfo jshn jsonfilter awk
+- Depends: iwinfo jshn jsonfilter awk
 
 
   [autowwan]: https://github.com/koniu/autowwan
