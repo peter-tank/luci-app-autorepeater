@@ -5,15 +5,9 @@ module("luci.controller.autorepeater", package.seeall)
 
 function index()
 	local page
-
---	page = node("admin", "services")
---	page.target = firstchild()
---	page.title  = _("AutoRepeater")
---	page.order  = 50
---	page.index  = true
-
 	local uci = require("luci.model.uci").cursor()
 	local nxfs	= require "nixio.fs"
+
 	local has_wifi = false
 
 	uci:foreach("wireless", "wifi-device",
@@ -27,90 +21,39 @@ function index()
 	end
 
 	if has_wifi then
-		page = entry({"admin", "services", "wifi_dev"}, post("wifi_dev"), nil)
-		page.leaf = true
-		page = entry({"admin", "services", "sta_add"}, post("sta_add"), nil)
+		page = entry({"admin", "services", "autorepeater"},alias("admin", "services", "autorepeater", "wifi_overview"),_("AutoRepeater"), 10)
+		page.dependent = true
+		page.acl_depends = { "luci-app-autorepeater" }
+
+		page = entry({"admin", "services", "autorepeater", "wifi_overview"}, arcombine(template("autorepeater/wifi_overview"), cbi("autorepeater/autorepeater")), _("AutoRepeater"), 10)
 		page.leaf = true
 
-		page = entry( {"admin", "services", "logread"}, call("logread"), nil)
+		page = entry( {"admin", "services", "autorepeater", "logread"}, call("logread"), nil)
 		page.leaf = true
-		page = entry( {"admin", "services", "bthandler"}, call("bthandler"), nil)
+		page = entry( {"admin", "services", "autorepeater", "bthandler"}, call("bthandler"), nil)
 		page.leaf = true
-		page = entry( {"admin", "services", "connect"}, call("connect"), nil)
-		page.leaf = true
-		page = entry( {"admin", "services", "overview_status"}, call("overview_status"), nil)
+		page = entry( {"admin", "services", "autorepeater", "overview_status"}, call("overview_status"), nil)
 		page.leaf = true
 
-		page = entry({"admin", "services", "autorepeater"}, arcombine(template("autorepeater/wifi_overview"), cbi("autorepeater/autorepeater")), _("AutoRepeater"), 1)
+		page = entry({"admin", "services", "autorepeater", "atrp_post_page"}, post("atrp_post_page"), nil)
 		page.leaf = true
 
-		page = entry({"admin", "services", "atrp_post_page"}, post("atrp_post_page"), nil)
+		page = entry( {"admin", "services", "autorepeater", "autorepeater-hints"}, cbi("autorepeater/hints"), nil )
+		page.leaf = true
+		page = entry( {"admin", "services", "autorepeater", "autorepeater-global"}, cbi("autorepeater/global"), nil )
+		page.leaf = true
+		page = entry({"admin", "services", "autorepeater", "autorepeater-logview"}, cbi("autorepeater/logview", {hideapplybtn=true, hidesavebtn=true, hideresetbtn=true}), nil )
 		page.leaf = true
 
-		page = entry( {"admin", "services", "autorepeater-hints"}, cbi("autorepeater/hints"), nil )
+		page = entry( {"admin", "services", "autorepeater", "autorepeater-overview"}, cbi("autorepeater/overview"), nil )
 		page.leaf = true
-		page = entry( {"admin", "services", "autorepeater-global"}, cbi("autorepeater/global"), nil )
+		page = entry( {"admin", "services", "autorepeater", "autorepeater-stations"}, cbi("autorepeater/stations"), nil )
 		page.leaf = true
-		page = entry({"admin", "services", "autorepeater-logview"}, cbi("autorepeater/logview", {hideapplybtn=true, hidesavebtn=true, hideresetbtn=true}), nil )
-		page.leaf = true
-
-		page = entry( {"admin", "services", "autorepeater-overview"}, cbi("autorepeater/overview"), nil )
-		page.leaf = true
-		page = entry( {"admin", "services", "autorepeater-stations"}, cbi("autorepeater/stations"), nil )
-		page.leaf = true
-		page = entry( {"admin", "services", "autorepeater-pnpmaps"}, cbi("autorepeater/pnpmaps"), nil )
+		page = entry( {"admin", "services", "autorepeater", "autorepeater-pnpmaps"}, cbi("autorepeater/pnpmaps"), nil )
 		page.leaf = true
 
 	end
 
-end
-
-function wifi_dev()
-	local tpl  = require "luci.template"
-	local http = require "luci.http"
-	local dev  = http.formvalue("device")
-	local ssid = http.formvalue("join")
-
-	if dev and ssid then
-		local cancel = (http.formvalue("cancel") or http.formvalue("cbi.cancel"))
-		if not cancel then
-			local cbi = require "luci.cbi"
-			local map = cbi.load("autorepeater/wifi_dev")[1]
-
-			if map:parse() ~= cbi.FORM_DONE then
-				tpl.render("header")
-				map:render()
-				tpl.render("footer")
-			end
-
-			return
-		end
-	end
-
-	tpl.render("autorepeater/wifi_dev")
-end
-
-function sta_add()
-	local dev = luci.http.formvalue("device")
-	local ntm = require "luci.model.network".init()
-
-	local sta = {mode="sta", network="wan", disassoc_low_ack="0", ssid="station to join", encryption="none"}
-	dev = dev and ntm:get_wifidev(dev)
-
-	if dev then
-		local net = dev:add_wifinet(sta)
---[[		local net = dev:add_wifinet({
-			mode       = "sta",
-			network       = "wan",
-			disassoc_low_ack = "0",
-			ssid       = "station to join",
-			encryption = "none"
-		})
-]]
---		ntm:save("wireless")
-		ntm:commit("wireless")
-		luci.http.redirect(luci.dispatcher.build_url("admin/services/autorepeater"))
-	end
 end
 
 function atrp_post_page()
@@ -122,7 +65,7 @@ function atrp_post_page()
 
 	if cbiname then
 		if tplname == "" then
-			luci.http.redirect(luci.dispatcher.build_url("admin/services/autorepeater-" .. cbiname), isec)
+			luci.http.redirect(luci.dispatcher.build_url("admin/services/autorepeater/autorepeater-" .. cbiname), isec)
 		else
 		local cancel = (http.formvalue("cancel") or http.formvalue("cbi.cancel"))
 			if not cancel then
@@ -174,9 +117,6 @@ function bthandler(button)
 	end
 	UCI:unload("system")
 	HTTP.write(handler)
-end
-
-function connect()
 end
 
 -- called by XHR.get from overview_updater.htm

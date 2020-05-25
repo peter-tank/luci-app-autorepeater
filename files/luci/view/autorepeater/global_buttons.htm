@@ -41,7 +41,7 @@
 		cbi_d_update(id);
 		var obj = document.getElementById("<%=cbid%>.help");
 		if ( !obj ) { return; }	// security check
-		XHR.get('<%=luci.dispatcher.build_url("admin", "services", "bthandler")%>/' + value, null,
+		XHR.get('<%=luci.dispatcher.build_url("admin", "services", "autorepeater", "bthandler")%>/' + value, null,
 			function(x) {
 				var value=""
 				if (x.responseText == "_nohandler_")

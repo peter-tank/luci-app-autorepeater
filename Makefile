@@ -8,9 +8,9 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=autorepeater
+PKG_NAME:=luci-app-autorepeater
 PKG_VERSION:=0.2.2
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_LICENSE:=GPLv3
 PKG_LICENSE_FILES:=LICENSE
@@ -20,27 +20,22 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)/$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSI
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/autorepeater/Default
+define Package/$(PKG_NAME)
 	SECTION:=luci
 	CATEGORY:=LuCI
 	SUBMENU:=3. Applications
 	TITLE:=AutoRepeater LuCI interface
-	URL:=https://github.com/peter-tank/autorepeater
+	URL:=https://github.com/peter-tank/luci-app-autorepeater
 	PKGARCH:=all
-	DEPENDS:=
+	DEPENDS:=+iwinfo +jshn +jsonfilter
 
 endef
 
-
-Package/luci-app-autorepeater = $(Package/autorepeater/Default)
-
-define Package/autorepeater/description
-	LuCI Support for $(1).
+define Package/$(PKG_NAME)/description
+	LuCI Support for AutoRepeater.
 endef
 
-Package/luci-app-autorepeater/description = $(call Package/autorepeater/description,Pure Script AutoRepeater)
-
-define Package/autorepeater/prerm
+define Package/$(PKG_NAME)/prerm
 #!/bin/sh
 # check if we are on real system
 if [ -z "$${IPKG_INSTROOT}" ]; then
@@ -56,13 +51,9 @@ fi
 exit 0
 endef
 
-Package/luci-app-autorepeater/prerm = $(Package/autorepeater/prerm)
-
-define Package/autorepeater/conffiles
+define Package/$(PKG_NAME)/conffiles
 /etc/config/autorepeater
 endef
-
-Package/luci-app-autorepeater/conffiles = $(Package/autorepeater/conffiles)
 
 define Build/Prepare
 	$(foreach po,$(wildcard ${CURDIR}/files/luci/i18n/*.po), \
@@ -77,7 +68,7 @@ endef
 define Build/Compile
 endef
 
-define Package/autorepeater/postinst
+define Package/$(PKG_NAME)/postinst
 #!/bin/sh
 
 if [ -z "$${IPKG_INSTROOT}" ]; then
@@ -97,9 +88,7 @@ fi
 exit 0
 endef
 
-Package/luci-app-autorepeater/postinst = $(Package/autorepeater/postinst)
-
-define Package/autorepeater/install
+define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
 	$(INSTALL_DATA) ./files/luci/controller/autorepeater.lua $(1)/usr/lib/lua/luci/controller/
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/i18n
@@ -125,8 +114,8 @@ define Package/autorepeater/install
 	$(INSTALL_BIN) ./files/autorepeater.init $(1)/etc/init.d/autorepeater
 	$(INSTALL_DIR) $(1)/etc/hotplug.d/iface/
 	$(INSTALL_BIN) ./files/95-upnpc $(1)/etc/hotplug.d/iface/
+	$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d
+	$(INSTALL_DATA) ./files/luci-app-autorepeater.json $(1)/usr/share/rpcd/acl.d/
 endef
 
-Package/luci-app-autorepeater/install = $(Package/autorepeater/install)
-
-$(eval $(call BuildPackage,luci-app-autorepeater))
+$(eval $(call BuildPackage,$(PKG_NAME)))

@@ -62,7 +62,7 @@ if has_miniupnpc then
 	ns.sectionhead = translate("Configuration")
 	ns.template = "cbi/tblsection"
 	ns.addremove = true
-	ns.extedit = DISP.build_url("admin", "services", "autorepeater-pnpmaps", "%s")
+	ns.extedit = DISP.build_url("admin", "services", "autorepeater", "autorepeater-pnpmaps", "%s")
 	function ns.create(self, name)
 		AbstractSection.create(self, name)
 		HTTP.redirect( self.extedit:format(name) )
@@ -105,7 +105,7 @@ ts.sectionhead = translate("Configuration")
 ts.template = "cbi/tblsection"
 ts.addremove = true
 ts.sortable=true
-ts.extedit = DISP.build_url("admin", "services", "autorepeater-stations", "%s")
+ts.extedit = DISP.build_url("admin", "services", "autorepeater", "autorepeater-stations", "%s")
 function ts.create(self, name)
 	AbstractSection.create(self, name)
 	HTTP.redirect( self.extedit:format(name) )

@@ -6,7 +6,7 @@ attr("id",  "cbi-" .. self.config .. ".overview_updater") .. attr("data-sfile", 
 %>
 ></div>
 <script type="text/javascript">//<![CDATA[
-	XHR.poll(5, '<%=url('admin/services/overview_status')%>', {sfile: document.getElementById("cbi-<%=self.config%>.overview_updater").dataset.sfile} ,
+	XHR.poll(5, '<%=url('admin/services/autorepeater/overview_status')%>', {sfile: document.getElementById("cbi-<%=self.config%>.overview_updater").dataset.sfile} ,
 		function(x)
 		{
 			var sec=JSON.parse(x.responseText);

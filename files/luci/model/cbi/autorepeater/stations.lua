@@ -32,7 +32,7 @@ m.title = [[</a><a href="]] .. DISP.build_url("admin", "services", "autorepeater
 m.description = translate("Auto Repeater helps you turn your router as a repeater, " ..
 			"join a wireless station by scan station ssid or bssid first.")
 
-m.redirect = DISP.build_url("admin", "services", "autorepeater-overview", isec)
+m.redirect = DISP.build_url("admin", "services", "autorepeater", "autorepeater-overview", isec)
 
 m.on_after_commit = function(self)
 	if self.changed then	-- changes ?

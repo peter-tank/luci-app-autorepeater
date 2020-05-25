@@ -82,16 +82,7 @@ set_wifi() {
 	}
 }
 reload_wifi() {
-	if ubus list network.wireless >/dev/null 2>/dev/null; then
-			#wifi reload
-			#wifi
-			#sleep 1
-			ubus call network reload $1 2>/dev/null
-	else
-			wifi reload $1
-			#down,detect,status,reload,reload_legacy
-			#*)ubus call network reload; wifi_updown "enable"
-	fi
+	/sbin/wifi reload
 }
 #status_get <dst> <_id> <item>
 __status_get(){
