@@ -516,6 +516,14 @@ done
 	uci_set_state "network" "${__IFACE}" "ifname" ""
 	/etc/init.d/network restart 2>/dev/null
 }
+dhcp_recheck() {
+	[ -f /etc/config/dhcp.fs ] || cat /etc/config/dhcp > /etc/config/dhcp.fs
+	if ! uci -q show dhcp.@dnsmasq[0] >/dev/null; then
+		cat /etc/config/dhcp.fs > /etc/config/dhcp
+		/etc/init.d/dnsmasq reload
+		write_log 3 "DHCP failsafe mode."
+	fi
+}
 #trying_association <config_path> <out_config> <ret>
 trying_association() {
 	local config_path="${1}"; shift 1
@@ -550,6 +558,7 @@ trying_association() {
 			eval "write_log 5 \"* configuring  ...[ \$${ret} ${percent}% - ${dev_str} ]\""
 			wifi_configure
 			write_log 6 "* ifup waiting ...[ ${dhcp_timeout}s ]"
+			dhcp_recheck
 			local i=${dhcp_timeout}
 			local _ipv4 _ipgw
 			while [ "${i}" -gt 0 ]; do

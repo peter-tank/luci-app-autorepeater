@@ -126,7 +126,7 @@ fi
 site_survey_and_association() {
 	#for resort scanned station by signal strengh
 	local BY_SEGNAL_ORDER_DEFAULTS=3
-	local ASSOCIATED _MATCH _TRIES
+	local ASSOCIATED=0 _MATCH=0 _TRIES=0
 	mv -f "${RUNDIR}/now_scan" "${RUNDIR}/last_scan" 2>/dev/null
 	mv -f "${RUNDIR}/now_matched" "${RUNDIR}/last_matched" 2>/dev/null
 	#result to log path
@@ -135,13 +135,9 @@ site_survey_and_association() {
 	ERR_LAST=$?
 	if [ "${ERR_LAST}" -gt 0 ]; then
 		write_log 6 "Filter by list ..."
-		_MATCH=0
 		#run by timestamped section name /strengh+system()+10000*rand()/
 		append_diff_ucipath_cfg_and_run dump_available_station_from_loaded "${BY_SEGNAL_ORDER_DEFAULTS}" "autorepeater" "${RUNDIR}" "now_scan" "wifi-scan" "wifi-station${isec}" "now_matched" _MATCH
 		if [ "${_MATCH}" -gt 0 ]; then
-			_MATCH=0
-			_TRIES=0
-			ASSOCIATED=0
 			#run by saved order
 			append_diff_ucipath_cfg_and_run build_trying_list_from_loaded "${associate_order}" "autorepeater" "${RUNDIR}" "now_matched" "wifi-scan" "wifi-station${isec}" "matched" _MATCH
 			write_log 5 "Prepared matched: [ ${_MATCH} ]"
@@ -192,26 +188,20 @@ while : ; do
 	else
 		ASSOCIATED=1
 	fi
-
-		if [ ${ASSOCIATED} -eq 0 ]; then
-			write_log 7 "Waiting ${RETRY_SECONDS} seconds (Retry Interval)"
-			sleep ${RETRY_SECONDS} &
-		else
-			write_log 7 "Waiting ${CHECK_SECONDS} seconds (Check Interval)"
-			[ -f /etc/config/dhcp.fs ] || cat /etc/config/dhcp > /etc/config/dhcp.fs
-			if ! uci -q show dhcp.@dnsmasq[0] >/dev/null; then
-				cat /etc/config/dhcp.fs > /etc/config/dhcp
-				/etc/init.d/dnsmasq reload
-				write_log 3 "DHCP failsafe mode."
-			fi
-			[ -f /etc/config/wireless.fs ] || cat /etc/config/wireless > /etc/config/wireless.fs
-			cat /etc/config/wireless.fs > /etc/config/wireless
-			reload_wifi
-			sleep ${CHECK_SECONDS} &
-		fi
-		PID_SLEEP=$!
-		wait ${PID_SLEEP}
-		PID_SLEEP=0
+	if [ ${ASSOCIATED} -eq 0 ]; then
+		write_log 7 "Waiting ${RETRY_SECONDS} seconds (Retry Interval)"
+		cat /etc/config/wireless.fs > /etc/config/wireless
+		reload_wifi
+		dhcp_recheck
+		sleep ${RETRY_SECONDS} &
+	else
+		write_log 7 "Waiting ${CHECK_SECONDS} seconds (Check Interval)"
+		dhcp_recheck
+		sleep ${CHECK_SECONDS} &
+	fi
+	PID_SLEEP=$!
+	wait ${PID_SLEEP}
+	PID_SLEEP=0
 
 	#pingout PING_OUT
 	if [ ${PING_OUT} -ne 0 ]; then
